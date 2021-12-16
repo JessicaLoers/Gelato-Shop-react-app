@@ -13,6 +13,8 @@ import ProductTags from './ProductTags';
 import isProductValid from '../lib/validation';
 
 export default function ProductForm({ onAddProduct }) {
+
+
   const initialProduct = {
     name: '',
     price: 0,
@@ -119,7 +121,7 @@ export default function ProductForm({ onAddProduct }) {
         </Select>
 
         <RadioButton value={product.packageSize} onRadioChange={handleChange}>
-          Gelato Size
+          Package Size
         </RadioButton>
 
         <ProductTags
