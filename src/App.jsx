@@ -53,25 +53,19 @@ function App() {
   return (
     <Container>
       <ProductForm onAddProduct={addProduct} />
-      <CardTree>
+      <ProductCard>
         {products.map((product, index) => (
           <article
-            key={index}
-            className={'area' + (index < 10 ? index + 1 : '')}
-            style={
-              index > 9 ? { gridRowStart: Math.floor((index - 2) / 4) + 3 } : {}
-            }
-          >
+            key={index}>
             <h3>{product.name}</h3>
-            <p>
-              {product.category} // {product.price} €
+            <p> {product.category} {product.price} €
             </p>
             <FavouriteIcon onClick={() => addToFavourites(product)}>
-              {isProductInListOfFavourites(product) ? '⭐️' : '✩'}
+              {isProductInListOfFavourites(product) ? '❤️' : '♡'}
             </FavouriteIcon>
           </article>
         ))}
-      </CardTree>
+      </ProductCard>
     </Container>
   );
 }
@@ -79,68 +73,30 @@ function App() {
 export default App;
 
 const Container = styled.div`
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 38% auto;
-  grid-template-rows: 1fr;
-  height: 100%;
+ h2 {
+    font-size: 1.6rem;
+  }
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 30rem;
   margin: 0 auto;
-  width: 80%;
 `;
 
-const CardTree = styled.div`
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-auto-rows: 10rem;
-  grid-auto-flow: row;
-  gap: 10px 10px;
-  grid-template-areas:
-    '. . . area1 area1 . . .'
-    '. . area2 area2 area3 area3 . .'
-    '. area4 area4 area5 area5 area6 area6 .'
-    'area7 area7 area8 area8 area9 area9 area10 area10';
-  padding: 6rem;
+const ProductCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 30rem;
+  margin: 2rem auto;
+  
   article {
     background: var(--secondary-color);
-    border-radius: 8px;
-    grid-column: span 2;
-    padding: 0 1rem 0.5rem;
+    color: var(--secondary-font);
+    border-radius: 3px;
+    padding:1.8rem 1.4rem;
+    margin: 5px;
     position: relative;
-  }
-  article:hover {
-    background: var(--primary-color);
-    color: var(--secondary-color);
-  }
-  .area1 {
-    grid-area: area1;
-  }
-  .area2 {
-    grid-area: area2;
-  }
-  .area3 {
-    grid-area: area3;
-  }
-  .area4 {
-    grid-area: area4;
-  }
-  .area5 {
-    grid-area: area5;
-  }
-  .area6 {
-    grid-area: area6;
-  }
-  .area7 {
-    grid-area: area7;
-  }
-  .area8 {
-    grid-area: area8;
-  }
-  .area9 {
-    grid-area: area9;
-  }
-  .area10 {
-    grid-area: area10;
-  }
+  }  
 `;
 
 const FavouriteIcon = styled.span`
@@ -148,5 +104,5 @@ const FavouriteIcon = styled.span`
   font-size: 2rem;
   position: absolute;
   right: 0.5rem;
-  bottom: 0.5rem;
+  bottom: 0.2rem;
 `;

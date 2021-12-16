@@ -27,10 +27,9 @@ export default function ProductForm({ onAddProduct }) {
   const [hasFormErrors, setHasFormErrors] = useState(false);
 
   const categories = [
-    'Tee',
-    'Lebkuchen',
-    'Kekse',
-    'Adventskalender',
+    'Amaretto',
+    'Extra Sahne',
+    'Extra Waffel',
     'Liköre & Spirituosen',
   ];
 
@@ -72,15 +71,11 @@ export default function ProductForm({ onAddProduct }) {
 
   return (
     <section>
-      <h2>🎄 Add a new product 🍪</h2>
+      <h2>Your favorite Gelato 🍨</h2>
       {hasFormErrors && (
         <ErrorMessage>
-          <div>
-            🎅🏽
-            <div className="bubble">🗯</div>
-          </div>
           <p>
-            <strong>Ho ho ho! </strong>
+            <strong>Cosa stai facendo? </strong>
             Please check if all fields are correctly filled.
           </p>
         </ErrorMessage>
@@ -110,7 +105,7 @@ export default function ProductForm({ onAddProduct }) {
             value={product.isDecorated}
             onCheckboxChange={handleChange}
           >
-            decorated
+           1 € to Papa Pino
           </Checkbox>
         </InputRow>
 
@@ -120,11 +115,11 @@ export default function ProductForm({ onAddProduct }) {
           options={categories}
           onSelectChange={handleChange}
         >
-          Product Category
+          Choose your specials
         </Select>
 
         <RadioButton value={product.packageSize} onRadioChange={handleChange}>
-          Package Size
+          Gelato Size
         </RadioButton>
 
         <ProductTags
@@ -167,9 +162,10 @@ const InputRow = styled.div`
 `;
 
 const Form = styled.form`
-  background: #620202;
+  background: var(--secondary-bg);
   padding: 0.7rem 0.5rem 1.2rem;
-  border-radius: 10px;
+  border-radius: 3px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
 
   label {
     display: block;
@@ -185,7 +181,7 @@ const Form = styled.form`
     background: var(--button-bg);
     border: 2px solid var(--button-bg);
     border-radius: 5px;
-    color: var(--primary-color);
+    color: #446324;
     font-size: 1.2rem;
     font-weight: 600;
     padding: 0.5rem;
@@ -202,8 +198,8 @@ const Form = styled.form`
 const ErrorMessage = styled.div`
   align-items: center;
   background: var(--warning);
-  border-radius: 6px;
-  color: white;
+  border-radius: 3px;
+  color: var(--secondary-font);
   display: flex;
   gap: 2.5rem;
   margin: 0 0 1rem;

@@ -1,35 +1,28 @@
 import { createGlobalStyle } from 'styled-components'
 
 export default createGlobalStyle`
-
-
 * {
   box-sizing: border-box;
+  padding: 0;
 }
+
 
 :root {
-  --primary-bg: #021f13;
-  --secondary-bg: #620202;
+  --primary-bg: #ebe8e1;
+  --secondary-bg: #fef6e9;
   --primary-color: #f8b229;
-  --secondary-color: #146b3a;
-  --button-bg: #ea4630;
-  --warning: #ea4630;
+  --secondary-color: #333E1C;
+  --button-bg: #6DA336;
+  --warning: #BD2121;
+
+  --primary-font: #333E1C;
+  --secondary-font: #F6E4C3;
 }
 
-html {
-  height: 100vh;
-}
+
 body {
-  font-family: sans-serif;
-  background: var(--primary-bg);
-  color: var(--primary-color);
-  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--primary-font);
 }
-
-#root {
-  height: 100%;
-}
-
-h2 {
-  color: var(--primary-color);
-} `
+`
