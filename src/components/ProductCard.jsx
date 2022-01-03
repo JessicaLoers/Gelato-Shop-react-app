@@ -1,74 +1,75 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-
 import { loadFromLocal, saveToLocal } from '../lib/localStorage'
+import { useEffect, useState } from 'react'
 
 
-function ProductCard ({onAddNewCard}) {
+function ProductCard ({onAddProductCard}) {   
 
-    
+    let products = onAddProductCard
+  
     const localStorageFavouriteProducts = loadFromLocal('_favouriteProducts');
+
   
-    
     const [favouriteProducts, setFavouriteProducts] = useState(
-      localStorageFavouriteProducts ?? []
-    );
-  
-  
-    useEffect(() => {
-      saveToLocal('_favouriteProducts', favouriteProducts);
-    }, [favouriteProducts]);
-  
-    
-  
+        localStorageFavouriteProducts ?? []
+      );
+
+     
+      useEffect(() => {
+        saveToLocal('_favouriteProducts', favouriteProducts);
+      }, [favouriteProducts]);
+
+
     function isProductInListOfFavourites(favouriteProductToAdd) {
-      return favouriteProducts.some(
-        (everyFavouriteProduct) =>
-          everyFavouriteProduct.id === favouriteProductToAdd.id
-      );
-    }
-  
-    function removeProductFromListOfFavourites(product) {
-      return favouriteProducts.filter(
-        (everyFavouriteProduct) => everyFavouriteProduct.id !== product.id
-      );
-    }
-  
-    function addToFavourites(favouriteProductToAdd) {
-      // Produkt ist schon auf der Liste der Favourites => Entfernen!
-      if (isProductInListOfFavourites(favouriteProductToAdd)) {
-        const favouritesToKeep = removeProductFromListOfFavourites(
-          favouriteProductToAdd
+        return favouriteProducts.some(
+          (everyFavouriteProduct) =>
+            everyFavouriteProduct.id === favouriteProductToAdd.id
         );
-        setFavouriteProducts(favouritesToKeep);
-      } else {
-        // Produkt ist noch NICHT auf der Liste der Favourites => Hinzufügen!
-        setFavouriteProducts([...favouriteProducts, favouriteProductToAdd]);
       }
-    }
+    
+      function removeProductFromListOfFavourites(product) {
+        return favouriteProducts.filter(
+          (everyFavouriteProduct) => everyFavouriteProduct.id !== product.id
+        );
+      }
+    
+      function addToFavourites(favouriteProductToAdd) {
+        // Produkt ist schon auf der Liste der Favourites => Entfernen!
+        if (isProductInListOfFavourites(favouriteProductToAdd)) {
+          const favouritesToKeep = removeProductFromListOfFavourites(
+            favouriteProductToAdd
+          );
+          setFavouriteProducts(favouritesToKeep);
+        } else {
+          // Produkt ist noch NICHT auf der Liste der Favourites => Hinzufügen!
+          setFavouriteProducts([...favouriteProducts, favouriteProductToAdd]);
+        }
+      }
 
-
-
-return (
-
-        {onAddNewCard.map((product, index) => (
+    return (
+        <ProductCardStyle>
+        {products.map((product, index) => (
           <article
             key={index}>
             <h3>{product.name}</h3>
-            <p> {product.category} {product.price} €
-            </p>
+            <p>Special: {product.category}</p>
+            <p>Size: {product.packageSize}</p>
+            <p>{product.price} €</p>
+           
+            
             <FavouriteIcon onClick={() => addToFavourites(product)}>
               {isProductInListOfFavourites(product) ? '❤️' : '♡'}
             </FavouriteIcon>
           </article>
         ))}
+      </ProductCardStyle>
+    )}
 
-        )
-    }
 
-    export default ProductCard
+export default ProductCard
 
-    const ProductCard = styled.div`
+
+const ProductCardStyle = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 30rem;
