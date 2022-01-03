@@ -63,8 +63,7 @@ function ProductCard ({onAddProductCard}) {
           </article>
         ))}
       </ProductCardStyle>
-    )
-}
+    )}
 
 
 export default ProductCard

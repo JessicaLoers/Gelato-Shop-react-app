@@ -23,7 +23,7 @@ function Tags({ label, tags, onUpdateTags, onDeleteTag }) {
 
   return (
     <TagsContainer>
-      <label htmlFor='tags'>{label} feed me with other specials</label>
+      <label htmlFor='tags'>{label} feed me with specials</label>
       <TagsWrapper>
         {tags.map((tag, index) => (
           <Tag key={index} onClick={() => onDeleteTag(tag)}>

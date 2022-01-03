@@ -1,20 +1,18 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState, useEffect } from 'react'
+import styled from 'styled-components'
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 
-import TextInput from './TextInput';
-import NumberInput from './NumberInput';
-import Checkbox from './Checkbox';
-import Select from './Select';
-import RadioButton from './RadioButton';
-import ProductTags from './ProductTags';
+import TextInput from './TextInput'
+import NumberInput from './NumberInput'
+import Checkbox from './Checkbox'
+import Select from './Select'
+import RadioButton from './RadioButton'
+import ProductTags from './ProductTags'
 
-import isProductValid from '../lib/validation';
+import isProductValid from '../lib/validation'
 
 export default function ProductForm({ onAddProduct }) {
-
-
   const initialProduct = {
     name: '',
     price: 0,
@@ -23,23 +21,37 @@ export default function ProductForm({ onAddProduct }) {
     packageSize: '',
     contactEmail: '',
     tags: [],
-  };
+  }
 
-  const [product, setProduct] = useState(initialProduct);
-  const [hasFormErrors, setHasFormErrors] = useState(false);
+  const [categories, setCategories] = useState([])
+  const [product, setProduct] = useState(initialProduct)
+  const [hasFormErrors, setHasFormErrors] = useState(false)
 
-  const categories = [
-    'Amaretto',
-    'Extra Sahne',
-    'Extra Waffel',
-    'Liköre & Spirituosen',
-  ];
+
+const fetchCategories = async () => {
+
+  const response = await fetch('http://localhost:4000/categories')
+  const data = await response.json()
+  setCategories(data)
+
+}
+
+useEffect(() => fetchCategories(), [])
+
+
+
+  // const categories = [
+  //   'Amaretto',
+  //   'Extra Sahne',
+  //   'Extra Waffel',
+  //   'Liköre & Spirituosen',
+  // ]
 
   const handleChange = (event) => {
-    let inputValue = event.target.value; // "Glühwein"
+    let inputValue = event.target.value // "Glühwein"
 
     if (event.target.type === 'checkbox') {
-      inputValue = event.target.checked;
+      inputValue = event.target.checked
     }
 
     // if (event.target.name === 'price') { parseInt }
@@ -49,27 +61,27 @@ export default function ProductForm({ onAddProduct }) {
       // neu zu setzende Property -> deren Wert überschreiben
       ...product,
       [event.target.name]: inputValue,
-    });
-  };
+    })
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     if (isProductValid(product)) {
-      onAddProduct({ id: uuidv4(), ...product });
+      onAddProduct({ id: uuidv4(), ...product })
       // setProduct(initialProduct);
-      setHasFormErrors(false);
+      setHasFormErrors(false)
     } else {
-      setHasFormErrors(true);
+      setHasFormErrors(true)
     }
-  };
+  }
 
   const updateTags = (tag) =>
-    setProduct({ ...product, tags: [...product.tags, tag] });
+    setProduct({ ...product, tags: [...product.tags, tag] })
 
   const deleteTag = (tagToDelete) => {
-    const updatedTags = product.tags.filter((tag) => tag !== tagToDelete);
-    setProduct({ ...product, tags: updatedTags });
-  };
+    const updatedTags = product.tags.filter((tag) => tag !== tagToDelete)
+    setProduct({ ...product, tags: updatedTags })
+  }
 
   return (
     <section>
@@ -85,7 +97,7 @@ export default function ProductForm({ onAddProduct }) {
       <Form onSubmit={handleSubmit}>
         <TextInput
           onTextInputChange={handleChange}
-          name="name"
+          name='name'
           value={product.name}
         >
           Product Name
@@ -94,7 +106,7 @@ export default function ProductForm({ onAddProduct }) {
         <InputRow>
           <div>
             <NumberInput
-              name="price"
+              name='price'
               value={product.price}
               onNumberInputChange={handleChange}
             >
@@ -103,21 +115,21 @@ export default function ProductForm({ onAddProduct }) {
           </div>
 
           <Checkbox
-            name="isDecorated"
+            name='isDecorated'
             value={product.isDecorated}
             onCheckboxChange={handleChange}
           >
-           1 € to Papa Pino
+            1 € to Papa Pino
           </Checkbox>
         </InputRow>
 
         <Select
-          name="category"
+          name='category'
           value={product.category}
           options={categories}
           onSelectChange={handleChange}
         >
-          Choose your specials
+          Choose your category
         </Select>
 
         <RadioButton value={product.packageSize} onRadioChange={handleChange}>
@@ -125,17 +137,17 @@ export default function ProductForm({ onAddProduct }) {
         </RadioButton>
 
         <ProductTags
-          headline="Product Tags"
+          headline='Product Tags'
           tags={product.tags}
           onDeleteTag={deleteTag}
           onUpdateTags={updateTags}
         />
 
         <TextInput
-          name="contactEmail"
+          name='contactEmail'
           value={product.contactEmail}
           onTextInputChange={handleChange}
-          placeholder="Add your email …"
+          placeholder='Add your email …'
         >
           Contact Email
         </TextInput>
@@ -144,10 +156,10 @@ export default function ProductForm({ onAddProduct }) {
           <button>Add Product</button>
           {/* Optional */}
           <button
-            type="reset"
+            type='reset'
             onClick={() => {
-              setProduct(initialProduct);
-              setHasFormErrors(false);
+              setProduct(initialProduct)
+              setHasFormErrors(false)
             }}
           >
             Reset
@@ -155,13 +167,13 @@ export default function ProductForm({ onAddProduct }) {
         </div>
       </Form>
     </section>
-  );
+  )
 }
 
 const InputRow = styled.div`
   display: flex;
   align-items: center;
-`;
+`
 
 const Form = styled.form`
   background: var(--secondary-bg);
@@ -195,7 +207,7 @@ const Form = styled.form`
   button:nth-child(even) {
     background: transparent;
   }
-`;
+`
 
 const ErrorMessage = styled.div`
   align-items: center;
@@ -223,4 +235,4 @@ const ErrorMessage = styled.div`
     top: -17px;
     right: -38px;
   }
-`;
+`

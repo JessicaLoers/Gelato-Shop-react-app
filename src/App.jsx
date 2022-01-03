@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { loadFromLocal, saveToLocal } from './lib/localStorage'
-import ProductForm from './components/ProductForm'
-import ProductCard from './components/ProductCard'
+import { loadFromLocal, saveToLocal } from './lib/localStorage';
+import ProductForm from './components/ProductForm';
+import ProductCard from './components/ProductCard';
 
 function App() {
   
@@ -16,6 +16,8 @@ function App() {
     saveToLocal('_products', products);
   }, [products]);
 
+  // funktion um den setProducts als Prop runterzureichen. 
+  //Wenn es nur als setPrdouct runtergereicht wird, kann es zu Differenzen im useState kommen
   const addProduct = (product) => setProducts([...products, product]);
 
   return (
